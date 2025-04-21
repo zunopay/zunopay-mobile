@@ -10,9 +10,9 @@ export default function HomeScreen() {
         contentFit="cover"
       />
       <View style={styles.content}>
-        <Text style={styles.title}>QR Code Scanner</Text>
+        <Text style={styles.title}>ZunoPay</Text>
         <Text style={styles.subtitle}>
-          Scan QR codes quickly and easily with our modern scanner app
+          Scan and pay easily
         </Text>
       </View>
     </View>

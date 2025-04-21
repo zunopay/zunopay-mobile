@@ -1,4 +1,4 @@
-import { Currency } from "@/types/payment";
+import { Currency } from "@/types";
 
 export interface Receiver {
     id: string; // encoded Iban or upi id (depends on qr provider)
