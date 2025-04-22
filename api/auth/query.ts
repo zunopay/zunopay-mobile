@@ -2,8 +2,7 @@ import { Authorization } from "@/model/auth";
 import apiClient from "../client";
 import { AUTH_QUERY_KEYS } from "./keys";
 
-const { REGISTER, AUTH, LOGIN } = AUTH_QUERY_KEYS;
-
+const { REGISTER, AUTH, LOGIN, USER } = AUTH_QUERY_KEYS;
 
 export type RegisterFormData = {
     username: string;
@@ -17,9 +16,10 @@ export type RegisterFormData = {
 
 export async function register(data: RegisterFormData) : Promise<{ data: Authorization | null, errorMessage?: string }> {
     try{
-        const response = await apiClient.post<Authorization>(`/${AUTH}/${REGISTER}`, data);
+        console.log(data)
+        const response = await apiClient.post<Authorization>(`/${AUTH}/${USER}/${REGISTER}`, data);
         return { data: response.data };
-    }catch(e){
+    }catch(error){
         return { data:null, errorMessage: "Something went wrong" }
     }
 }

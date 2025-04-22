@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ACCESS_TOKEN_KEY } from '@/constants/general';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function HomeScreen() {
+  const { isAuthenticated, isLoading } = useAuth()
   return (
     <View style={styles.container}>
       <Image
@@ -11,9 +15,11 @@ export default function HomeScreen() {
       />
       <View style={styles.content}>
         <Text style={styles.title}>ZunoPay</Text>
+        <Text>Authenticated : {isAuthenticated == true ? "true" : "false"}</Text>
         <Text style={styles.subtitle}>
           Scan and pay easily
         </Text>
+        <Button onPress={async() => await AsyncStorage.removeItem(ACCESS_TOKEN_KEY)} title='Clean local' />
       </View>
     </View>
   );

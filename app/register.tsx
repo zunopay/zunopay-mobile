@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { Picker } from "@react-native-picker/picker";
 import { useAsyncStorage } from "@/hooks/useAsyncStorage";
 import { ACCESS_TOKEN_KEY } from "@/constants/general";
@@ -9,14 +9,21 @@ import { RoutePath } from "@/enums/RoutePath";
 import { useRouter } from "expo-router";
 
 const RegisterScreen = () => {
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm<RegisterFormData>();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
+  setValue('role', 'Merchant')
+
   const router = useRouter();
-  const [,setAccessToken] = useAsyncStorage<string>(ACCESS_TOKEN_KEY, '');
+  const [, setAccessToken] = useAsyncStorage<string>(ACCESS_TOKEN_KEY, "");
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const {data: authorization, errorMessage} = await register(data);
-      if(!authorization || errorMessage){
+      const { data: authorization, errorMessage } = await register(data);
+      if (!authorization || errorMessage) {
         // Put toaster message
         return;
       }
@@ -37,8 +44,15 @@ const RegisterScreen = () => {
         rules={{ required: "Username is required" }}
         render={({ field: { onChange, value } }) => (
           <>
-            <TextInput style={styles.input} placeholder="Username" onChangeText={onChange} value={value} />
-            {errors.username && <Text style={styles.error}>{errors.username.message}</Text>}
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              onChangeText={onChange}
+              value={value}
+            />
+            {errors.username && (
+              <Text style={styles.error}>{errors.username.message}</Text>
+            )}
           </>
         )}
       />
@@ -50,8 +64,8 @@ const RegisterScreen = () => {
           required: "Email is required",
           pattern: {
             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: "Invalid email format"
-          }
+            message: "Invalid email format",
+          },
         }}
         render={({ field: { onChange, value } }) => (
           <>
@@ -63,7 +77,9 @@ const RegisterScreen = () => {
               keyboardType="email-address"
               autoCapitalize="none"
             />
-            {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
+            {errors.email && (
+              <Text style={styles.error}>{errors.email.message}</Text>
+            )}
           </>
         )}
       />
@@ -75,8 +91,8 @@ const RegisterScreen = () => {
           required: "Password is required",
           minLength: {
             value: 6,
-            message: "Password must be at least 6 characters"
-          }
+            message: "Password must be at least 6 characters",
+          },
         }}
         render={({ field: { onChange, value } }) => (
           <>
@@ -87,7 +103,9 @@ const RegisterScreen = () => {
               onChangeText={onChange}
               value={value}
             />
-            {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
+            {errors.password && (
+              <Text style={styles.error}>{errors.password.message}</Text>
+            )}
           </>
         )}
       />
@@ -99,7 +117,11 @@ const RegisterScreen = () => {
         defaultValue="EU"
         rules={{ required: "Region is required" }}
         render={({ field: { onChange, value } }) => (
-          <Picker selectedValue={value} onValueChange={onChange} style={styles.input}>
+          <Picker
+            selectedValue={value}
+            onValueChange={onChange}
+            style={styles.picker}
+          >
             <Picker.Item label="Europe" value="EU" />
             <Picker.Item label="India" value="IN" />
             <Picker.Item label="Brazil" value="BR" />
@@ -108,18 +130,16 @@ const RegisterScreen = () => {
         )}
       />
 
-      <Text style={styles.label}>Role</Text>
-      <View style={styles.toggleContainer}>
-        <Button title="Merchant" onPress={() => setValue("role", "Merchant")} />
-        <Button title="Individual" onPress={() => setValue("role", "Individual")} />
-      </View>
-      {errors.role && <Text style={styles.error}>{errors.role.message}</Text>}
-
       <Controller
         control={control}
         name="referralCode"
         render={({ field: { onChange, value } }) => (
-          <TextInput style={styles.input} placeholder="Referral Code" onChangeText={onChange} value={value} />
+          <TextInput
+            style={styles.input}
+            placeholder="Referral Code"
+            onChangeText={onChange}
+            value={value}
+          />
         )}
       />
 
@@ -144,6 +164,15 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 10,
     fontWeight: "bold",
+  },
+
+  picker: {
+    height: 55,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginVertical: 8,
+    paddingHorizontal: 5,
+    borderRadius: 6,
   },
   input: {
     height: 40,

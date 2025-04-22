@@ -1,9 +1,18 @@
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Chrome as Home, QrCode, Settings } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function TabLayout() {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) return null;
+
+  if (!isAuthenticated) {
+    return <Redirect href="/register" />;
+  }
+  
   return (
     <Tabs
       screenOptions={{

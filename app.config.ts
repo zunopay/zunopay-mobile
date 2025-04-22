@@ -22,11 +22,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: 'single',
     favicon: './assets/images/favicon.png',
   },
-  plugins: ['expo-router'],
+  plugins: ['expo-router', 'expo-secure-store'],
   experiments: {
     typedRoutes: true,
   },
   extra: {
     API_ENDPOINT: process.env.API_ENDPOINT,
+    PRIVY_APPLICATION_ID: process.env.PRIVY_APPLICATION_ID,
+    PRIVY_CLIENT_ID: process.env.PRIVY_CLIENT_ID
   },
 });

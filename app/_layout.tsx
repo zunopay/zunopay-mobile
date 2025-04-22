@@ -1,17 +1,25 @@
-// app/_layout.tsx
 import { useAuth } from '@/hooks/useAuth';
 import { Stack, Redirect } from 'expo-router';
+import {PrivyProvider} from '@privy-io/expo';
+import { PRIVY_APPLICATION_ID, PRIVY_CLIENT_ID } from '@/config';
 
-export default function RootLayout() {
+function AppLayout(){
   const { isAuthenticated, isLoading } = useAuth();
 
-  if (isLoading) return null; // or splash screen
-
-  // Authenticated users go to the tabs layout by default
+  if (isLoading) return null;
   if (isAuthenticated) {
     return <Redirect href="/(tabs)" />;
   }
 
-  // Not authenticated -> show auth stack (e.g., register/login)
-  return <Stack screenOptions={{ headerShown: false }} initialRouteName='register' />;
+  return  <Stack screenOptions={{ headerShown: false }} initialRouteName='register' />
 }
+
+export default function RootLayout() {
+
+  return (
+    <PrivyProvider appId={PRIVY_APPLICATION_ID} clientId={PRIVY_CLIENT_ID}>
+       <AppLayout />
+    </PrivyProvider>
+  ) ;
+}
+
