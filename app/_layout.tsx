@@ -1,15 +1,20 @@
 import { useAuth } from '@/hooks/useAuth';
-import { Stack, Redirect } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import {PrivyProvider} from '@privy-io/expo';
 import { PRIVY_APPLICATION_ID, PRIVY_CLIENT_ID } from '@/config';
+import { useEffect } from 'react';
 
 function AppLayout(){
   const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/(tabs)');
+    }
+  }, [isAuthenticated]);
 
   if (isLoading) return null;
-  if (isAuthenticated) {
-    return <Redirect href="/(tabs)" />;
-  }
 
   return  <Stack screenOptions={{ headerShown: false }} initialRouteName='register' />
 }
