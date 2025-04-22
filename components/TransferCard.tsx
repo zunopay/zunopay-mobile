@@ -5,8 +5,12 @@ import { useEmbeddedSolanaWallet, usePrivy } from "@privy-io/expo";
 import { getConnection } from "@/lib/connection";
 import { fetchDigitalTransferTransaction } from "@/api/payment/query";
 
-export const TransferCard = () => {
-  const [vpa, setVpa] = useState("");
+type Props = {
+    vpa?: string
+}
+
+export const TransferCard: React.FC<Props> = (props) => {
+  const [vpa, setVpa] = useState(props.vpa);
   const [amount, setAmount] = useState("");
 
   const { isReady } = usePrivy();
@@ -36,6 +40,7 @@ export const TransferCard = () => {
         vpa,
         amount: parsedAmount * 1_000_000,
       });
+      if(!encodedTransaction)return;
       const transaction = versionedTransactionFromBs64(encodedTransaction);
       const receipt = await provider.request({
         method: 'signAndSendTransaction',

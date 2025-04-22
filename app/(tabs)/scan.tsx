@@ -3,11 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CameraView, Camera } from 'expo-camera';
 import { fetchReceiver } from '@/api/payment/query';
 import { Receiver } from '@/model/payment';
+import { TransferCard } from '@/components/TransferCard';
 
 export default function ScanScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
-  const [receiver, setReceiver] = useState<Receiver | null>(null);
+  const [receiver, setReceiver] = useState<Receiver>();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -23,7 +24,7 @@ export default function ScanScreen() {
     setScanned(true);
   
     try {
-      const receiver = await fetchReceiver({ encodedQr: data });
+      const receiver = await fetchReceiver({ encodedQr: encodeURIComponent(data) });
       setReceiver(receiver);
     } catch (error) {
       console.error('Error fetching receiver:', error);
@@ -64,10 +65,11 @@ export default function ScanScreen() {
             style={styles.button}
             onPress={() => {
               setScanned(false);
-              setReceiver(null);
+              setReceiver(undefined);
             }}>
             <Text style={styles.buttonText}>Scan Again</Text>
           </TouchableOpacity>
+        <TransferCard vpa={receiver.vpa}/>
         </View>
       </View>
     );
