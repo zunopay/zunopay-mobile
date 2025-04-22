@@ -4,11 +4,13 @@ import { PointsCard } from '@/components/PointsCard';
 import { LogoutCard } from '@/components/LogoutCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TransferCard } from '@/components/TransferCard';
+import RefreshableLayout from '@/components/layout/RefreshableLayout';
 
 export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+    <RefreshableLayout onRefresh={()=>{}}>
       <Text style={styles.title}>ZunoPay</Text>
       <View style={styles.content}>
         <BalanceCard />
@@ -19,6 +21,8 @@ export default function HomeScreen() {
         </Text>
       </View>
       <LogoutCard />
+    </RefreshableLayout>
+
     </SafeAreaView>
   );
 }

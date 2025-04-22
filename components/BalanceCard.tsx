@@ -1,9 +1,12 @@
+import { useFetchBalance } from "@/hooks/useFetchBalance";
 import { StyleSheet, Text, View } from "react-native";
 
 export function BalanceCard () {
+    const { balance } = useFetchBalance();
+    
     return (
         <View style={styles.container}>
-            <Text style={styles.balance} >Balance: 124 USD</Text>
+            <Text style={styles.balance} >Balance: ${balance} USD</Text>
         </View>
     )
 }

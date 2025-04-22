@@ -4,8 +4,8 @@ import { API_ENDPOINT } from '@/config';
 import { ACCESS_TOKEN_KEY } from '@/constants/general';
 
 export const getAccessToken = async () => {
-  const token = await AsyncStorage.getItem('access_token');
-  return token?.trim() ?? ''; // Ensure no leading/trailing spaces
+  const token = await AsyncStorage.getItem(ACCESS_TOKEN_KEY);
+  return token?.trim() ?? '';
 };
 
 const apiClient = axios.create({
@@ -17,10 +17,8 @@ apiClient.interceptors.request.use(
   async (config) => {
     const token = await getAccessToken();
     if (token) {
-      // Ensure token is in the correct "Bearer" format
       const formattedToken = token;
       if (config.headers) {
-        // Directly set Authorization header
         config.headers.Authorization = formattedToken;
       }
     }

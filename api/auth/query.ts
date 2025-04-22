@@ -36,7 +36,7 @@ export async function login(data: LoginFormData) : Promise<{ data: Authorization
         const response = await apiClient.patch<Authorization>(`/${AUTH}/${LOGIN}`, data);
         return { data: response.data };
     }catch(e){
-        console.log(e)
+        debugApiClient(e)
         return { data:null, errorMessage: "Something went wrong" }
     }
 }

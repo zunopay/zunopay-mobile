@@ -1,5 +1,5 @@
 import { Redirect, Tabs, useRouter } from 'expo-router';
-import { Platform, StyleSheet, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { Chrome as Home, QrCode, Settings } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
 import { useAuth } from '@/hooks/useAuth';

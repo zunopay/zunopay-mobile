@@ -1,7 +1,7 @@
 import { ACCESS_TOKEN_KEY } from "@/constants/general";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 
 export function LogoutCard () {
     const router = useRouter();
