@@ -1,5 +1,6 @@
 export const RoutePath = Object.freeze({
     Login: 'login',
     Register: 'register',
-    Home: '/(tabs)'
+    Home: '/(tabs)',
+    Verify_Email: '/verify-email'
 })

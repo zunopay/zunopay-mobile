@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { BalanceCard } from '@/components/BalanceCard';
 import { PointsCard } from '@/components/PointsCard';
 import { LogoutCard } from '@/components/LogoutCard';

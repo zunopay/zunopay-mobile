@@ -20,7 +20,6 @@ export default function LoginScreen() {
     try {
       const { data: authorization, errorMessage } = await login(data);
       if (!authorization || errorMessage) {
-        // Put toaster message
         return;
       }
       await setAccessToken(authorization.accessToken);

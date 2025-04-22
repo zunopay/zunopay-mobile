@@ -1,6 +1,7 @@
 import { USER_QUERY_KEYS } from "./keys";
 import apiClient, { getAccessToken } from "../client";
 import { User } from "@/model/user";
+import { debugApiClient } from "@/lib/utils";
 
 const { USER, ME, GET, VERIFY_EMAIL } = USER_QUERY_KEYS;
 
@@ -12,6 +13,7 @@ export async function fetchMe() : Promise<{ data: User | null, errorMessage?: st
         const response = await apiClient.get<User>(`/${USER}/${GET}/${ME}`);
         return {data: response.data}
     }catch(e){
+        debugApiClient(e)
         return { data: null, errorMessage: "Something went wrong" }
         
     }

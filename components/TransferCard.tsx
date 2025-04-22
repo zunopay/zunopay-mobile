@@ -1,28 +1,21 @@
-import { usePrivy, useEmbeddedSolanaWallet } from "@privy-io/expo";
-import { StyleSheet, Text, View } from "react-native";
+import { usePrivy, useEmbeddedSolanaWallet, getUserEmbeddedSolanaWallet, useRecoverEmbeddedWallet, useOnNeedsRecovery, useSetEmbeddedWalletRecovery } from "@privy-io/expo";
+import { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export function TransferCard() {
   const { isReady, user } = usePrivy();
-  const wallet = useEmbeddedSolanaWallet();
+
+  const wallet = getUserEmbeddedSolanaWallet(user);
 
   if (!isReady) {
     return <Text>Loading ... !</Text>;
-  }
-
-  const isAuthenticated = !!user;
-  if (!isAuthenticated) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.content}>Verify your email to start using the app</Text>
-      </View>
-    );
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.content}>
         {" "}
-        Wallet Address: {wallet?.wallets?.at(0)?.address}
+        Wallet Address: {wallet?.address}
       </Text>
     </View>
   );

@@ -28,7 +28,7 @@ const RegisterScreen = () => {
         return;
       }
       await setAccessToken(authorization.accessToken);
-      router.push(RoutePath.Home);
+      router.replace(RoutePath.Verify_Email as any);
     } catch (err: any) {
       console.log("Registration Error", err.response?.data?.message);
     }
@@ -144,6 +144,7 @@ const RegisterScreen = () => {
       />
 
       <Button title="Register" onPress={handleSubmit(onSubmit)} />
+      <Text onPress={() => router.push(RoutePath.Login as any)}>Already have a account ? Login !</Text>
     </View>
   );
 };

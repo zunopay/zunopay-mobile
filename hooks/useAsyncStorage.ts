@@ -8,8 +8,15 @@ export function useAsyncStorage<T>(key: string, initialValue: T): [T, (value: T)
     (async () => {
       try {
         const item = await AsyncStorage.getItem(key);
-        if (item !== null) {
-          setStoredValue(JSON.parse(item));
+        if(!item)return initialValue;
+
+        const parsedValue = parseJson<T>(item);
+        if (parsedValue) {
+          try {
+            setStoredValue(parsedValue);
+          } catch (e) {
+            setStoredValue(item as T);
+          }
         }
       } catch (error) {
         console.warn(`Error reading ${key} from AsyncStorage`, error);
@@ -20,7 +27,11 @@ export function useAsyncStorage<T>(key: string, initialValue: T): [T, (value: T)
   const setValue = useCallback(
     async (value: T) => {
       try {
-        await AsyncStorage.setItem(key, JSON.stringify(value));
+        if (typeof value === 'string') {
+          await AsyncStorage.setItem(key, value);
+        } else {
+          await AsyncStorage.setItem(key, JSON.stringify(value));
+        }
         setStoredValue(value);
       } catch (error) {
         console.warn(`Error setting ${key} in AsyncStorage`, error);
@@ -30,4 +41,20 @@ export function useAsyncStorage<T>(key: string, initialValue: T): [T, (value: T)
   );
 
   return [storedValue, setValue];
+}
+
+function parseJson<T>(value: string): T | undefined {
+  if (value === "undefined") return undefined;
+
+  try {
+    return JSON.parse(value, (_key, val) => {
+      if (typeof val === "string" && /^\d{4}-\d{2}-\d{2}T/.test(val)) {
+        const date = new Date(val);
+        return isNaN(date.getTime()) ? val : date;
+      }
+      return val;
+    }) as T;
+  } catch {
+    return undefined;
+  }
 }
