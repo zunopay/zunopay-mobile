@@ -19,13 +19,17 @@ export async function transferDigital(
     if (!encodedTransaction) return;
 
     const transaction = versionedTransactionFromBs64(encodedTransaction);
-    const receipt = await provider.request({
+    await provider.request({
       method: "signAndSendTransaction",
       params: { transaction, connection },
     });
+    //TODO: Have this after buying rpc plan
+    // const result = await connection.confirmTransaction({
+    //   ...latestBlockhash,
+    //   signature: receipt.signature,
+    // });
+    // if (result.value.err) throw new Error();
 
-    Alert.alert("Success", "Transaction sent successfully!");
-    console.log("Transaction receipt:", receipt);
   } catch (err) {
     console.error("Transfer failed:", err);
     Alert.alert("Transfer Failed", "Something went wrong.");
