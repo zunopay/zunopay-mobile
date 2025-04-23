@@ -22,3 +22,11 @@ export function decodeBs64(encodedString: string) {
 export function versionedTransactionFromBs64(encodedString: string) {
   return VersionedTransaction.deserialize(decodeBs64(encodedString));
 }
+
+export function cleanWalletAddress(walletAddress?: string) {
+  if(!walletAddress)return "";
+  
+  const start = walletAddress.slice(0,4);
+  const end = walletAddress.slice(-4);
+  return `${start}...${end}`;
+}

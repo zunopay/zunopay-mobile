@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CameraView, Camera } from 'expo-camera';
 import { fetchReceiver } from '@/api/payment/query';
 import { Receiver } from '@/model/payment';
-import { TransferCard } from '@/components/TransferCard';
+import { TransferCard } from '@/components/cards/TransferCard';
 
 export default function ScanScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
