@@ -14,6 +14,7 @@ import { useEmbeddedSolanaWallet, usePrivy } from "@privy-io/expo";
 import { getConnection } from "@/lib/connection";
 import { fetchDigitalTransferTransaction } from "@/api/payment/query";
 import { FontAwesome } from "@expo/vector-icons";
+import { transferDigital } from "@/lib/transfer-transaction";
 
 type Props = {
   vpa?: string;
@@ -38,28 +39,9 @@ export const TransferCard: React.FC<Props> = ({ vpa: initialVpa }) => {
       return;
     }
 
-    try {
-      const encodedTransaction = await fetchDigitalTransferTransaction({
-        vpa,
-        amount: parsedAmount * 1_000_000,
-      });
-
-      if (!encodedTransaction) return;
-
-      const transaction = versionedTransactionFromBs64(encodedTransaction);
-      const receipt = await provider.request({
-        method: "signAndSendTransaction",
-        params: { transaction, connection },
-      });
-
-      Alert.alert("Success", "Transaction sent successfully!");
-      console.log("Transaction receipt:", receipt);
-    } catch (err) {
-      console.error("Transfer failed:", err);
-      Alert.alert("Transfer Failed", "Something went wrong.");
-    }
-  };
-
+    transferDigital(connection, provider, vpa, parsedAmount)
+  }
+    
   if (!isReady) {
     return <Text style={styles.loading}>Loading wallet...</Text>;
   }

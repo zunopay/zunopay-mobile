@@ -2,13 +2,23 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CameraView, Camera } from 'expo-camera';
 import { fetchReceiver } from '@/api/payment/query';
-import { Receiver } from '@/model/payment';
 import { TransferCard } from '@/components/cards/TransferCard';
+import { useTransferStore } from '@/store';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 
 export default function ScanScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
-  const [receiver, setReceiver] = useState<Receiver>();
+  const {setReceiver} = useTransferStore()
+  const router = useRouter();
+
+  useFocusEffect(
+    useCallback(() => {
+      setScanned(false);
+      return () => {};
+    }, [])
+  );
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -25,7 +35,10 @@ export default function ScanScreen() {
   
     try {
       const receiver = await fetchReceiver({ encodedQr: encodeURIComponent(data) });
+      if(!receiver)return;
+
       setReceiver(receiver);
+      router.push('/transfer')
     } catch (error) {
       console.error('Error fetching receiver:', error);
       setScanned(false);
@@ -50,27 +63,6 @@ export default function ScanScreen() {
           onPress={() => Camera.requestCameraPermissionsAsync()}>
           <Text style={styles.buttonText}>Grant Permission</Text>
         </TouchableOpacity>
-      </View>
-    );
-  }
-
-  if (receiver) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultTitle}>Receiver Details</Text>
-          <Text style={styles.resultText}>{receiver.name}</Text>
-          <Text style={styles.resultText}>{receiver.walletAddress}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setScanned(false);
-              setReceiver(undefined);
-            }}>
-            <Text style={styles.buttonText}>Scan Again</Text>
-          </TouchableOpacity>
-        <TransferCard vpa={receiver.vpa}/>
-        </View>
       </View>
     );
   }
