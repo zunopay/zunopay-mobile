@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Switch, Platform } from 'reac
 import { useState } from 'react';
 import { Bell, Camera, Moon, Share2 } from 'lucide-react-native';
 
-export default function SettingsScreen() {
+export default function HistoryScreen() {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 

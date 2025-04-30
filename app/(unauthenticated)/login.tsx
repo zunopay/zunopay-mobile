@@ -5,6 +5,7 @@ import { ACCESS_TOKEN_KEY } from "@/constants/general";
 import { Controller, useForm } from "react-hook-form";
 import { login, LoginFormData } from "@/api/auth/query";
 import { useRouter } from "expo-router";
+import { RoutePath } from "@/enums/RoutePath";
 
 
 export default function LoginScreen() {
@@ -24,7 +25,7 @@ export default function LoginScreen() {
       }
       await setAccessToken(authorization.accessToken);
       Alert.alert("Success", "Logged in!");
-      router.push("/(tabs)")
+      router.push( RoutePath.Home)
     } catch (error) {
       Alert.alert("Error", "Login failed");
     }

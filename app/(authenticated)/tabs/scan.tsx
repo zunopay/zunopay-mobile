@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CameraView, Camera } from 'expo-camera';
 import { fetchReceiver } from '@/api/payment/query';
-import { TransferCard } from '@/components/cards/TransferCard';
 import { useTransferStore } from '@/store';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback } from 'react';
+import { RoutePath } from '@/enums/RoutePath';
 
 export default function ScanScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
@@ -38,7 +38,7 @@ export default function ScanScreen() {
       if(!receiver)return;
 
       setReceiver(receiver);
-      router.push('/transfer')
+      router.push(RoutePath.Transfer)
     } catch (error) {
       console.error('Error fetching receiver:', error);
       setScanned(false);

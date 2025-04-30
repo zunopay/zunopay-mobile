@@ -1,29 +1,9 @@
-import { Redirect, Tabs, useRouter } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Chrome as Home, QrCode, Settings } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
-import { useAuth } from '@/hooks/useAuth';
-import { usePrivy } from '@privy-io/expo';
-import { useEffect } from 'react';
-import { RoutePath } from '@/enums/RoutePath';
 
 export default function TabLayout() {
-  const { isAuthenticated, isLoading, isEmailVerified } = useAuth();
-  const { isReady, user } = usePrivy();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isReady || isLoading || !isAuthenticated) return;
-
-    if (!user || !isEmailVerified) {
-      router.replace(RoutePath.Verify_Email as any);
-    }
-  }, [isAuthenticated, isEmailVerified, isLoading, isReady, user]);
-
-  if (isLoading || !isReady) return null;
-
-  if (!isAuthenticated) return <Redirect href="/register" />;
-
   return (
     <Tabs
       screenOptions={{
@@ -54,17 +34,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="history"
         options={{
-          title: 'Settings',
+          title: 'History',
           tabBarIcon: ({ color, size }) => <Settings size={size} color={color} />,
         }}
       />
     </Tabs>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   tabBar: {

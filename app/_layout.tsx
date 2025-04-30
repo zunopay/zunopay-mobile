@@ -24,12 +24,7 @@ function AppLayout() {
 
   if (isLoading || !isReady) return null;
 
-  return (
-    <Stack
-      screenOptions={{ headerShown: false }}
-      initialRouteName="(auth)/register"
-    />
-  );
+  return ( <Stack screenOptions={{ headerShown: false }} /> );
 }
 
 export default function RootLayout() {

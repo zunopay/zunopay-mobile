@@ -1,6 +1,9 @@
-import { ScrollView, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl, View, Text, StyleSheet } from 'react-native';
 import { useCallback, useState, ReactNode } from 'react';
 import { LogoWithText } from '../logo/LogoWithText';
+import { useRouter } from 'expo-router';
+import { RoutePath } from '@/enums/RoutePath';
+import { HomeNav } from '../nav/HomeNav';
 
 type Props = {
   children: ReactNode;
@@ -9,6 +12,7 @@ type Props = {
 
 export default function RefreshableLayout({ children, onRefresh }: Props) {
   const [refreshing, setRefreshing] = useState(false);
+  const router = useRouter();
 
   const handleRefresh = useCallback(async () => {
     if (!onRefresh) return;
@@ -24,8 +28,9 @@ export default function RefreshableLayout({ children, onRefresh }: Props) {
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
     >
-      <LogoWithText />
+      <HomeNav />
       {children}
     </ScrollView>
   );
 }
+

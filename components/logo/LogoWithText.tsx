@@ -16,7 +16,6 @@ export const LogoWithText: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'flex-start',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
