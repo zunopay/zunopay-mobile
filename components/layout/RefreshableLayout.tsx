@@ -24,6 +24,7 @@ export default function RefreshableLayout({ children, onRefresh }: Props) {
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1, padding: 8 }}
+      style={{ backgroundColor: "#fff" }}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }

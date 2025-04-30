@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import { BalanceCard } from "@/components/cards/BalanceCard";
-import { PointsCard } from "@/components/cards/PointsCard";
 import { LogoutCard } from "@/components/cards/LogoutCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TransferCard } from "@/components/cards/TransferCard";
@@ -8,17 +7,15 @@ import RefreshableLayout from "@/components/layout/RefreshableLayout";
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <RefreshableLayout onRefresh={() => {}}>
+    <RefreshableLayout onRefresh={() => {}}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.subtitle}>Scan UPI/PIX/IBAN and pay</Text>
         <View style={styles.content}>
           <BalanceCard />
-          {/* <PointsCard /> */}
           <TransferCard />
         </View>
-        <LogoutCard />
-      </RefreshableLayout>
-    </SafeAreaView>
+      </SafeAreaView>
+    </RefreshableLayout>
   );
 }
 
@@ -27,6 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingBottom: 85,
+    paddingTop: 10,
   },
   heroImage: {
     width: "100%",
@@ -47,6 +45,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     color: "#8E8E93",
     lineHeight: 24,
-    alignSelf:'center'
+    alignSelf: "center",
   },
 });

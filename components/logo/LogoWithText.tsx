@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
+    position: 'absolute',
+    justifyContent:'center',
+    left: 100,
+    top: 0
   },
   logo: {
     width: 30,

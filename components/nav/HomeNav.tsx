@@ -24,13 +24,12 @@ const styles = StyleSheet.create({
       backgroundColor: 'blue',
       width: 30,
       height: 30,
-      textAlign: 'center',
-      borderRadius: 20
+      borderRadius: 20,
+      marginTop: 5
     },
     content: {
       display: 'flex',
       flexDirection: 'row',
-      gap: 50,
-      alignItems: 'center'
+      height: 50
     },
   })
