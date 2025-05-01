@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import {  Tabs } from 'expo-router';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Chrome as Home, QrCode, Settings } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';

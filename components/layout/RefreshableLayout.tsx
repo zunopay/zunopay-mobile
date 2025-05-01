@@ -29,7 +29,6 @@ export default function RefreshableLayout({ children, onRefresh }: Props) {
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
     >
-      <HomeNav />
       {children}
     </ScrollView>
   );

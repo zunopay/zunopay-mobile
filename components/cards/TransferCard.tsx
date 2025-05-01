@@ -9,10 +9,9 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { cleanWalletAddress, versionedTransactionFromBs64 } from "@/lib/utils";
+import { cleanWalletAddress } from "@/lib/utils";
 import { useEmbeddedSolanaWallet, usePrivy } from "@privy-io/expo";
 import { getConnection } from "@/lib/connection";
-import { fetchDigitalTransferTransaction } from "@/api/payment/query";
 import { FontAwesome } from "@expo/vector-icons";
 import { transferDigital } from "@/lib/transfer-transaction";
 
