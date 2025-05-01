@@ -43,13 +43,6 @@ export function WalletCard() {
 
         <View style={styles.actionWrapper}>
             <Pressable onPress={() => console.log('pressed')} style={styles.actionItem}>
-                <PiggyBankIcon color='black'/>
-            </Pressable>
-            <Text style={styles.text}>Change</Text>
-        </View>
-
-        <View style={styles.actionWrapper}>
-            <Pressable onPress={() => console.log('pressed')} style={styles.actionItem}>
                 <SendHorizonal color='black'/>
             </Pressable>
             <Text style={styles.text}>Send</Text>
@@ -101,8 +94,8 @@ const styles = StyleSheet.create({
   },
   actionItem: {
     backgroundColor: 'white',
-    width: 35,
-    height: 35,
+    width: 50,
+    height: 50,
     borderRadius: '50%',
     alignItems: 'center',
     justifyContent: 'center',
